@@ -154,7 +154,7 @@ function SkillList() {
           />
           <ProjectCard
             title="University Extracurricular Management System"
-            techStack={["PHP", "Bootstrap", "SCSS", "jQuery", "javascript"]}
+            techStack={["PHP", "Bootstrap", "SCSS", "jQuery"]}
             description="A vanilla PHP university extracurricular system featuring a user-friendly homepage and an admin dashboard for managing news, document submissions, financial records, and extracurricular registrations."
             githubLink="https://github.com/ImamAdli/UKM-System"
             previewImage={[
