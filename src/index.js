@@ -38,7 +38,7 @@ function Avatar() {
     <div className="flex flex-col items-center gap-3 md:w-72">
       <img
         className="w-44 h-44 rounded-full object-cover border-4 border-white shadow-md"
-        src={`${process.env.PUBLIC_URL}/imam.jpg`}
+        src={`${process.env.PUBLIC_URL}/assets/imam.jpg`}
         alt="avatar_img"
       />
       <p className="text-2xl font-semibold text-gray-800 text-center">
@@ -80,14 +80,23 @@ function Intro() {
       <h1 className="text-2xl font-bold text-gray-800 mb-3">Intro</h1>
       <p className="text-gray-600 leading-relaxed">
         A passionate Junior Web Developer with hands-on experience in PHP
-        frameworks like Laravel and CodeIgniter. Currently expanding my
-        expertise into React JS, I combine strong problem-solving abilities with
-        a quick learning mindset. I thrive both independently and in
-        collaborative environments, consistently delivering projects on time.
-        Eager to contribute and grow while bringing technical skills and
-        enthusiasm for continuous learning to innovative projects.
+        frameworks like Laravelr. Currently expanding my expertise into React
+        JS, I combine strong problem-solving abilities with a quick learning
+        mindset. I thrive usually work independently but open to collaborative
+        environments, consistently delivering projects on time. Eager to
+        contribute and grow while bringing technical skills and enthusiasm for
+        continuous learning to innovative projects.
       </p>
     </div>
+    // QA intro : "Menerapkan self-testing methodology dalam setiap project,
+    // termasuk manual testing, debugging, dan optimisasi performa,
+    // menghasilkan aplikasi yang robust dengan tingkat error minimal."
+    // DB Management Intro : Mendesain dan mengimplementasi struktur
+    // database yang efisien untuk berbagai aplikasi web, termasuk
+    // optimisasi query dan relasi antar tabel untuk performa maksimal.
+    // System Analyst Intro : Menganalisis kebutuhan client dan
+    // mengembangkan solusi yang tidak hanya memenuhi requirement
+    // awal, tapi juga memberikan improvisasi dan fitur tambahan yang meningkatkan nilai aplikasi.
   );
 }
 
@@ -119,23 +128,39 @@ function SkillList() {
           <ProjectCard
             title="Employee Attendance with QR Code"
             techStack={["Laravel", "MySQL", "Bootstrap", "JavaScript"]}
-            description="A full-featured e-commerce platform with user authentication, product management, and payment integration."
-            githubLink="https://github.com/ImamAdli/e-commerce"
-            previewImage="/project-1.png"
+            description="An employee attendance system featuring QR code generation, check-in/out functionality, attendance with photo capture and history tracking, and an admin dashboard for attendance management."
+            githubLink="https://github.com/ImamAdli/Employee-Attendance-with-QR-Code"
+            previewImage={[
+              "/assets/project-1.1.jpg",
+              "/assets/project-1.2.jpg",
+            ]}
           />
           <ProjectCard
             title="Boarding House Booking System"
-            techStack={["CodeIgniter", "MySQL", "jQuery", "Bootstrap"]}
-            description="Dynamic company profile website with admin dashboard for content management."
-            githubLink="https://github.com/ImamAdli/company-profile"
-            previewImage="/company-preview.jpg"
+            techStack={["HTML", "PHP", "Bootstrap", "jQuery"]}
+            description="A vanilla PHP boarding house booking system with a user-friendly interface for easy navigation and booking management, and an admin dashboard for managing bookings and users."
+            githubLink="https://github.com/ImamAdli/Website-Manajemen-Rumah-Kost"
+            previewImage={[
+              "/assets/project-2.1.jpg",
+              "/assets/project-2.2.jpg",
+            ]}
+          />
+          <ProjectCard
+            title="Profile Website"
+            techStack={["ReactJS", "TailwindCSS"]}
+            description="My Profile Page with ReactJS and TailwindCSS"
+            githubLink="https://github.com/ImamAdli/profile-card"
+            previewImage="/assets/project-3.1.jpg"
           />
           <ProjectCard
             title="University Extracurricular Management System"
-            techStack={["React", "Tailwind", "Firebase"]}
-            description="Modern task management application with real-time updates and collaborative features."
-            githubLink="https://github.com/ImamAdli/task-management"
-            previewImage="/task-preview.jpg"
+            techStack={["PHP", "Bootstrap", "SCSS", "jQuery", "javascript"]}
+            description="A vanilla PHP university extracurricular system featuring a user-friendly homepage and an admin dashboard for managing news, document submissions, financial records, and extracurricular registrations."
+            githubLink="https://github.com/ImamAdli/UKM-System"
+            previewImage={[
+              "/assets/project-4.1.jpg",
+              "/assets/project-4.2.jpg",
+            ]}
           />
         </div>
       </div>
@@ -156,28 +181,17 @@ function Skill({ name, level }) {
     basic: "w-1/3",
   };
 
-  // Detail skill untuk tooltip
+  // Detail tooltip
   const skillDetails = {
-    // HTML: "Pengalaman 3+ tahun dalam HTML5, semantic markup, dan accessibility best practices",
     HTML: "3+ years experience in HTML5, semantic markup, and accessibility best practices",
-    // CSS: "Mahir dalam CSS3, Flexbox, Grid, dan responsive design (Bootstrap)",
     CSS: "Proficient in CSS3, Flexbox, Grid, and responsive design (Bootstrap)",
-    // JavaScript:
-    //   "Familiar dengan ES6+, DOM manipulation, dan asynchronous programming (jQuery)",
     JavaScript:
       "Familiar with ES6+, DOM manipulation, and asynchronous programming (jQuery)",
-    // PHP: "Pengalaman membuat aplikasi web dengan PHP 7+ dengan CRUD",
     PHP: "Experience building web applications with PHP 7+ with CRUD",
-    // Laravel:
-    //   "Membuat berbagai aplikasi menggunakan Laravel 10+ (Blade templating, Eloquent ORM, CRUD, Database Migration, API, dan Authentication)",
     Laravel:
       "Built some applications using Laravel 10+ (Blade templating, Eloquent ORM, CRUD, Database Migration, and Authentication)",
-    // CodeIgniter:
-    //   "Pengalaman dengan CodeIgniter 4, routing, dan database migrations",
     CodeIgniter:
       "Experience with CodeIgniter 4, routing, and database migrations",
-    // ReactJS:
-    //   "Memahami dasar-dasar React (JSX, dan Conditional Rendering, Array Methods, Hooks, dan State Management) dan membuat aplikasi web dengan ReactJS",
     ReactJS:
       "Understanding React fundamentals (JSX, Conditional Rendering, Array Methods, Hooks, and State Management) and building web applications with ReactJS",
   };
@@ -238,10 +252,24 @@ function ProjectCard({
 }) {
   const [showPreview, setShowPreview] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Convert single image to array if needed
+  const images = Array.isArray(previewImage) ? previewImage : [previewImage];
 
   const handleImageError = () => {
-    console.error("Failed to load image:", previewImage);
+    console.error("Failed to load image:", images[currentImageIndex]);
     setImageError(true);
+  };
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
   return (
@@ -302,32 +330,57 @@ function ProjectCard({
       {/* Preview Modal */}
       {showPreview && (
         <div
-          className="fixed inset-0 flex items-center justify-center p-4"
+          className="fixed inset-0 flex items-center justify-center p-4 z-50"
           onClick={() => setShowPreview(false)}
         >
           <div className="absolute inset-0 bg-black/70"></div>
           <div
             className="relative max-w-4xl w-full bg-white rounded-xl shadow-2xl overflow-hidden
                      transform transition-all duration-300 animate-in"
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => setShowPreview(false)}
           >
             <div className="relative">
               {imageError ? (
                 <div
-                  className="flex flex-col items-center justify-center p-8 text-gray-500 cursor-pointer"
+                  className="flex flex-col items-center justify-center p-8 text-gray-500"
                   onClick={() => setShowPreview(false)}
                 >
                   <i className="fas fa-image-slash text-4xl mb-2"></i>
                   <p>Failed to load image preview</p>
                 </div>
               ) : (
-                <img
-                  src={process.env.PUBLIC_URL + previewImage}
-                  alt={`${title} preview`}
-                  className="w-full h-auto cursor-pointer"
-                  onError={handleImageError}
-                  onClick={() => setShowPreview(false)}
-                />
+                <div className="relative group">
+                  <img
+                    src={process.env.PUBLIC_URL + images[currentImageIndex]}
+                    alt={`${title} preview ${currentImageIndex + 1}`}
+                    className="w-full h-auto"
+                    onError={handleImageError}
+                    onClick={() => setShowPreview(false)}
+                  />
+
+                  {/* Navigation Buttons */}
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 
+                                 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full
+                                 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                      >
+                        <i className="fas fa-chevron-left"></i>
+                      </button>
+
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 
+                                 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full
+                                 transition-all duration-200 opacity-0 group-hover:opacity-100"
+                      >
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+                    </>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -347,38 +400,38 @@ function ContactInfo() {
   return (
     <div className="pt-6 mt-6 border-t border-gray-200">
       <h2 className="text-xl font-bold text-gray-800 mb-4">Contact & Social</h2>
-      <div className="flex flex-wrap justify-between items-center gap-4">
-        <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           <a
             href="https://github.com/ImamAdli/"
-            className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200"
+            className="flex items-center gap-2 px-3 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
           >
             <i className="fab fa-github"></i> GitHub
           </a>
           <a
             href="https://www.linkedin.com/in/imam-adli/"
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
           >
             <i className="fab fa-linkedin"></i> LinkedIn
           </a>
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=imamimamimam717@gmail.com"
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
+            className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
           >
             <i className="fas fa-envelope"></i> Gmail
           </a>
           <a
             href="https://wa.me/08990096343"
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
+            className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
           >
             <i className="fab fa-whatsapp"></i> WhatsApp
           </a>
         </div>
-        <div>
+        <div className="w-full sm:w-auto">
           <a
-            href="imamadli-resume.pdf"
+            href="assets/imamadli-resume.pdf"
             download
-            className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200"
+            className="flex items-center gap-2 px-3 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200 text-sm sm:text-base w-full justify-center"
           >
             <i className="fas fa-download"></i> Download CV
           </a>
