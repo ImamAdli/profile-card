@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import { generatePortfolioPDF } from "./print";
 
 function App() {
   return (
@@ -80,7 +81,7 @@ function Intro() {
       <h1 className="text-2xl font-bold text-gray-800 mb-3">Intro</h1>
       <p className="text-gray-600 leading-relaxed">
         A passionate Junior Web Developer with hands-on experience in PHP
-        frameworks like Laravelr. Currently expanding my expertise into React
+        frameworks like Laravel. Currently expanding my expertise into React
         JS, I combine strong problem-solving abilities with a quick learning
         mindset. I thrive usually work independently but open to collaborative
         environments, consistently delivering projects on time. Eager to
@@ -111,11 +112,13 @@ function SkillList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <Skill name="HTML" level="Advanced" />
           <Skill name="CSS" level="Advanced" />
-          <Skill name="JavaScript" level="Intermediate" />
           <Skill name="PHP" level="Advanced" />
+          <Skill name="JavaScript" level="Intermediate" />
           <Skill name="Laravel" level="Intermediate" />
+          <Skill name="MySQL" level="Intermediate" /> 
           <Skill name="CodeIgniter" level="Basic" />
           <Skill name="ReactJS" level="Basic" />
+
         </div>
       </div>
 
@@ -194,6 +197,7 @@ function Skill({ name, level }) {
       "Experience with CodeIgniter 4, routing, and database migrations",
     ReactJS:
       "Understanding React fundamentals (JSX, Conditional Rendering, Array Methods, Hooks, and State Management) and building web applications with ReactJS",
+    MySQL: "Experience with MySQL database design, optimization, and complex queries for web applications",
   };
 
   return (
@@ -204,14 +208,18 @@ function Skill({ name, level }) {
                     hover:bg-white/90"
       >
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-          <span
-            className={`px-3 py-1 rounded-full text-sm font-medium border ${
-              levelColors[level.toLowerCase()]
-            }`}
-          >
-            {level}
-          </span>
+        <i className="fas fa-info-circle text-blue-500 text-sm opacity-60 group-hover:opacity-100 transition-opacity duration-200"></i>
+          <h3 className="text-lg font-semibold text-gray-800 flex-1 mr-4">{name}</h3>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <span
+              className={`px-3 py-1 rounded-full text-sm font-medium border ${
+                levelColors[level.toLowerCase()]
+              }`}
+            >
+              {level}
+            </span>
+            
+          </div>
         </div>
 
         <div className="mt-4">
@@ -397,6 +405,15 @@ function ProjectCard({
 }
 
 function ContactInfo() {
+  const handleDownloadPortfolio = async () => {
+    try {
+      await generatePortfolioPDF();
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("Failed to generate PDF. Please try again.");
+    }
+  };
+
   return (
     <div className="pt-6 mt-6 border-t border-gray-200">
       <h2 className="text-xl font-bold text-gray-800 mb-4">Contact & Social</h2>
@@ -428,13 +445,12 @@ function ContactInfo() {
           </a>
         </div>
         <div className="w-full sm:w-auto">
-          <a
-            href="assets/imamadli-resume.pdf"
-            download
+          <button
+            onClick={handleDownloadPortfolio}
             className="flex items-center gap-2 px-3 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200 text-sm sm:text-base w-full justify-center"
           >
-            <i className="fas fa-download"></i> Download CV
-          </a>
+            <i className="fas fa-download"></i> Download Portfolio
+          </button>
         </div>
       </div>
     </div>
